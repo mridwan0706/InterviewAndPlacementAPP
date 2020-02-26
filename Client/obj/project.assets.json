@@ -11794,23 +11794,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gemboel\\.nuget\\packages\\": {},
+    "C:\\Users\\fvrqo\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\Client\\Client.csproj",
+      "projectUniqueName": "C:\\Users\\fvrqo\\OneDrive\\Documents\\Visual Studio 2017\\Projects\\InterviewAndPlacementAPP\\Client\\Client.csproj",
       "projectName": "Client",
-      "projectPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\Client\\Client.csproj",
-      "packagesPath": "C:\\Users\\Gemboel\\.nuget\\packages\\",
-      "outputPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\Client\\obj\\",
+      "projectPath": "C:\\Users\\fvrqo\\OneDrive\\Documents\\Visual Studio 2017\\Projects\\InterviewAndPlacementAPP\\Client\\Client.csproj",
+      "packagesPath": "C:\\Users\\fvrqo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\fvrqo\\OneDrive\\Documents\\Visual Studio 2017\\Projects\\InterviewAndPlacementAPP\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Gemboel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\fvrqo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
