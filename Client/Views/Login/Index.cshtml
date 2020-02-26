@@ -1,0 +1,147 @@
+﻿
+@{
+    Layout = null;
+}
+<title>Login- Interview & Placement App</title>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Interview And Placements</h1>
+                                    </div>
+                                    <form class="user">
+                                        <div class="form-group">
+                                            <label for="Username">Username Or Email</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="UsernameText" placeholder="Username Or Password">                                                
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control" id="PasswordText" placeholder="Password">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><a href=""><i class="fa fa-eye-slash"></i></a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                            </div>
+                                        </div>
+                                        <a onclick="Login()" class="btn btn-primary btn-user btn-block">
+                                            <i style="color : white">Login</i>
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#myModal">Forgot Password?</button>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small" href="register.html">Create an Account!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Forgot Password
+                    Form
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="p-5">
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
+                        <p class="mb-4">We get it, stuff happens. Just enter your email address below and we'll send you a link to reset your password!</p>
+                    </div>
+                    <form class="user">
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id="EmailText" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                        </div>
+                        <a onclick="ForgotPassword()" class="btn btn-primary btn-user btn-block">
+                            Reset Password
+                        </a>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" onclick="HaveAccount()">Already have an account? Login!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom fonts for this template-->
+<link href="~/Assets/Login/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+<!-- Custom styles for this template-->
+<link href="~/Assets/Login/css/sb-admin-2.css" rel="stylesheet">
+<!-- Bootstrap core JavaScript-->
+<script src="~/Assets/Login/vendor/jquery/jquery.min.js"></script>
+<script src="~/Assets/Login/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="~/Assets/Login/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="~/Assets/Login/js/sb-admin-2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+<script>
+
+    function Login() {
+        var user = new Object();
+        user.UserName = $("#UsernameText").val();
+        user.PasswordHash = $("#PasswordText").val();
+        $.ajax({
+            "url": "/Login/Login",
+            "type": "Post",
+            "dataType": "json",
+            "data": { UserName: user.UserName, PasswordHash: user.PasswordHash }
+        }).then((result) => {
+            debugger
+            if (result.data != null) {
+                Swal.fire(
+                    'Success!',
+                    'Login Success',
+                    'success').then(() => {
+                        onclose: window.location.href = "/admin"
+                    });
+            }
+            else {
+                Swal.fire(
+                'Failed!',
+                'Oops.',
+                'failed'
+            )}
+        })
+    }
+
+</script>
+
+
