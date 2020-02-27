@@ -36,7 +36,9 @@ namespace API
             //MySql
             services.AddTransient<MySQLDatabase>(_ => new MySQLDatabase(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<SiteRepository>();
-            services.AddMvc();
+            services.AddScoped<InterviewRepository>();
+            services.AddScoped<PlacementRepository>();
+            services.AddScoped<ReplacementRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

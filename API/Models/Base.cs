@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.Models
 {
-    public class Base
+    public class Base : IEntity
     {
         [Key]
         public int Id { get; set; }
@@ -14,11 +15,16 @@ namespace API.Models
         public DateTime UpdateDate { get; set; }
         public DateTime DeleteDate { get; set; }
         public bool IsDeleted { get; set; } = false;
-  
+
+        public void Update()
+        {
+            UpdateDate = DateTime.Now.ToLocalTime();
+        }
+
         public void Delete()
         {
             IsDeleted = true;
-            UpdateDate = DateTime.Now.ToLocalTime();
+            DeleteDate = DateTime.Now.ToLocalTime();
         }
     }
 }

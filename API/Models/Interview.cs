@@ -12,12 +12,12 @@ namespace API.Models
         public DateTime InterviewDate { get; set; }
         public string Note { get; set; }
         public string Status { get; set; }
-        [ForeignKey("Site")]
-        public int SiteId { get; set; }
-        public Site Site { get; set; }
-        [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        //[ForeignKey("Site")]
+        //public int SiteId { get; set; }
+        //public Site Site { get; set; }
+        //[ForeignKey("Employee")]
+        //public int EmployeeId { get; set; }
+        //public Employee Employee { get; set; }
 
         public Interview()
         {

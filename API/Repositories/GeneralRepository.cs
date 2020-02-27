@@ -1,7 +1,7 @@
 ﻿using API.Models;
 using API.Repositories.Interfaces;
 using Dapper;
-using System;
+using Dapper.Contrib.Extensions;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace API.Repositories
 {
     public class GeneralRepository<TEntity> : IRepository<TEntity>
-        where TEntity : class
+        where TEntity : class, IEntity
     {
         private readonly MySQLDatabase database;
         public DynamicParameters parameters = new DynamicParameters();
@@ -20,43 +20,34 @@ namespace API.Repositories
             database = mySQL;
         }
 
-        public Task<int> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var query = "Delete" + typeof(TEntity).Name;
-            parameters.Add("i", id);
-            var delete = database.Connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
+            var entity = await database.Connection.GetAsync<TEntity>(id);
+            var delete = await database.Connection.DeleteAsync(entity);
             return delete;
         }
 
-        public IEnumerable<TEntity> Get()
+        public async Task<IEnumerable<TEntity>> GetAsync()
         {
-            var query = "GetAll" + typeof(TEntity).Name + "s";
-            var get = database.Connection.QueryAsync<TEntity>(query, commandType: CommandType.StoredProcedure).Result.ToList();
+            var getall = await database.Connection.GetAllAsync<TEntity>();
+            return getall;
+        }
+
+        public async Task<TEntity> GetAsync(int id)
+        {
+            var get = await database.Connection.GetAsync<TEntity>(id);
             return get;
         }
 
-        public TEntity Get(int id)
+        public async Task<int> PostAsync(TEntity entity)
         {
-            var query = "Get" + typeof(TEntity).Name;
-            parameters.Add("i", id);
-            var get = database.Connection.QueryAsync<TEntity>(query, parameters, commandType: CommandType.StoredProcedure).Result.SingleOrDefault();
-            return get;
-        }
-
-        public Task<int> Post(TEntity entity)
-        {
-            var query = "Insert" + typeof(TEntity).Name;
-            parameters.AddDynamicParams(entity);
-            var post = database.Connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
+            var post = await database.Connection.InsertAsync(entity);
             return post;
         }
 
-        public Task<int> Put(int id, TEntity entity)
+        public async Task<bool> PullAsync(TEntity entity)
         {
-            var query = "Update" + typeof(TEntity).Name;
-            parameters.Add("i", id);
-            parameters.AddDynamicParams(entity);
-            var put = database.Connection.ExecuteAsync(query, parameters, commandType: CommandType.StoredProcedure);
+            var put = await database.Connection.UpdateAsync(entity);
             return put;
         }
     }

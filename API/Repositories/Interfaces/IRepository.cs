@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace API.Repositories.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class, IEntity
     {
-        IEnumerable<T> Get();
-        T Get(int id);
-        Task<int> Post(T entity);
-        Task<int> Put(int id, T entity);
-        Task<int> Delete(int id);
+        Task<IEnumerable<T>> GetAsync();
+        Task<T> GetAsync(int id);
+        Task<int> PostAsync(T entity);
+        Task<bool> PullAsync(T entity);
+        Task<bool> DeleteAsync(int id);
     }
 }
