@@ -3,7 +3,6 @@ E:\Tugas Akhir\InterviewAndPlacementAPP\API\bin\Debug\netcoreapp2.1\API.runtimec
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\bin\Debug\netcoreapp2.1\API.runtimeconfig.dev.json
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\bin\Debug\netcoreapp2.1\API.dll
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\bin\Debug\netcoreapp2.1\API.pdb
-E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.csprojAssemblyReference.cache
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.csproj.CoreCompileInputs.cache
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.RazorAssemblyInfo.cache
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.RazorAssemblyInfo.cs
@@ -12,3 +11,4 @@ E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.Assembly
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.RazorTargetAssemblyInfo.cache
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.dll
 E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.pdb
+E:\Tugas Akhir\InterviewAndPlacementAPP\API\obj\Debug\netcoreapp2.1\API.csprojAssemblyReference.cache

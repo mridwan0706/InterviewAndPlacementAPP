@@ -8,12 +8,12 @@ namespace API.Databases
 {
     public class AppDB
     {
-        public MySqlConnection database { get; }
+        //public MySqlConnection database { get; }
 
-        public AppDB(string connectionString)
-        {
-            database = new MySqlConnection(connectionString);
-        }
-        public void Dispose() => database.Dispose();
+        //public AppDB(string connectionString)
+        //{
+        //    database = new MySqlConnection(connectionString);
+        //}
+        //public void Dispose() => database.Dispose();
     }
 }

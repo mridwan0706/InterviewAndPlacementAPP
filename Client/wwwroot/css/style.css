@@ -1629,7 +1629,7 @@ Megamenu
     width: 100%;
     padding: 30px;
     margin-top: 0px;
-    background: url(../../assets/images/background/megamenubg.jpg) no-repeat right bottom #fff; }
+    background: url(~/images/background/megamenubg.jpg) no-repeat right bottom #fff; }
   .mega-dropdown ul {
     padding: 0px; }
     .mega-dropdown ul li {
@@ -1673,7 +1673,7 @@ dropdown-item
 Custom-select
 ******************/
 .custom-select {
-  background: url(../../assets/images/custom-select.png) right 0.75rem center no-repeat; }
+  background: url(~/images/custom-select.png) right 0.75rem center no-repeat; }
 
 /*******************
 textarea

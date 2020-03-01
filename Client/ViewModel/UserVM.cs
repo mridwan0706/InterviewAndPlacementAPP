@@ -14,7 +14,8 @@ namespace Client.ViewModels
         public string UserName { get; set; }
 
         public string PasswordHash { get; set; }
+        public string ConfirmPassword { get; set; }
 
-        public string token { get; set; }
+        public string Token { get; set; }
     }
 }

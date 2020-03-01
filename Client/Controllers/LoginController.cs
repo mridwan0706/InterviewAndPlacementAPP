@@ -20,7 +20,7 @@ namespace Client.Controllers
         {
             client.BaseAddress = new Uri("http://192.168.128.79:1708/API/");
             client.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODUyNzQwNDEsImlzcyI6ImJvb3RjYW1wcmVzb3VyY2VtYW5hZ2VtZW50IiwiYXVkIjoicmVhZGVycyJ9.YA-M_KN25FWmUuIS1bd9F5ioiRkVY8NCas1Bjma8kjQ");
-            lokal.BaseAddress = new Uri("https://localhost:44397/Login");
+            lokal.BaseAddress = new Uri("https://localhost:44397/Login/ResetPassword");
         }
 
         public ActionResult Index()
@@ -35,25 +35,25 @@ namespace Client.Controllers
 
         public async Task<ActionResult> Login(UserVM userVM)
         {
-           
+
 
             var myContent = JsonConvert.SerializeObject(userVM);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
             var ByteContent = new ByteArrayContent(buffer);
             ByteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var login = await client.PostAsync("Users/Login", ByteContent);
-            
-            if (login.IsSuccessStatusCode)                
+
+            if (login.IsSuccessStatusCode)
             {
                 var content = login.Content.ReadAsStringAsync().Result.Replace("\"", "").Split("...");
                 var token = "Bearer " + content[0];
                 var username = content[1];
                 HttpContext.Session.SetString("Username", username);
                 HttpContext.Session.SetString("Token", token);
-                return Json(new { data = content, statusCode = 200});
+                return Json(new { data = content, statusCode = 200 });
                 //return Json(new { data = login });
             }
-            return Json(new {statusCode = 400 });
+            return Json(new { statusCode = 400 });
 
         }
         [HttpPost]
@@ -67,20 +67,33 @@ namespace Client.Controllers
 
             if (token.IsSuccessStatusCode)
             {
-                var content = token.Content.ReadAsAsync<UserVM>().Result;                         
-                return Json(new { data = lokal.BaseAddress+"/"+content.Id, statusCode=200});
+                var content = token.Content.ReadAsAsync<UserVM>().Result;
+                return Json(new { data = lokal.BaseAddress + "/" + content.Token, Token= content.Token, statusCode = 200 });
                 //return Json(new { data = login });
             }
             return Json(new { statusCode = 400 });
         }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> ResetPassword(string id, string passwordnew)
+        
+        public IActionResult ResetPassword(string Token)
         {
-            var user = client.GetAsync("Users/"+id).Result.Content.ReadAsAsync<UserVM>().Result;
-            user.PasswordHash = passwordnew;
-            var put = await client.PutAsJsonAsync("Users/ForgetPassword/"+user.Id, user);
-            return View(put);
+            var cek = client.GetAsync("Users/GetToken/?Token=" + Token).Result;
+            var read = cek.Content.ReadAsAsync<UserVM>().Result;
+            return View(Json(new { data=read}));
+        }
+
+      
+
+        [HttpPut("{Token}")]
+        public async Task<ActionResult> ResetPasswordAPI( string Token, UserVM userVM)
+        {        
+                
+            var put = await client.PutAsJsonAsync("Users/ForgotPassword/?Token=" +Token, userVM.PasswordHash);
+            if (put.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            return BadRequest("Reset Password Failed");
+               
         }
 
 
