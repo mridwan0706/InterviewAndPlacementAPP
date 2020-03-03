@@ -13,9 +13,31 @@ namespace API.Controllers
     [ApiController]
     public class PlacementsController : BaseController<Placement, PlacementRepository>
     {
+        private PlacementRepository placementRepository;
         public PlacementsController(PlacementRepository placementRepository) : base (placementRepository)
         {
-                
+            this.placementRepository = placementRepository;
+        }
+
+        [HttpGet("Sites")]
+        public IActionResult GetPlacementSites()
+        {
+            var sites = placementRepository.GetPlacementSites().Result;
+            return Ok(sites);
+        }
+
+        [HttpGet("Site/{id}")]
+        public IActionResult DetailPlacementSite(int Id)
+        {
+            var detail = placementRepository.DetailPlacementSite(Id).Result;
+            return Ok(detail);
+        }
+
+        [HttpGet("History/{empId}")]
+        public IActionResult HistoryUser(string empId)
+        {
+            var placement = placementRepository.HistoryUser(empId).Result;
+            return Ok(placement);
         }
     }
 }

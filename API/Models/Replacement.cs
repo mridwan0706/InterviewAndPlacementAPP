@@ -11,14 +11,9 @@ namespace API.Models
     {
         public DateTime RequestDate { get; set; }
         public string Reason { get; set; }
-        public string Status { get; set; }
+        public bool Status { get; set; }
         //[ForeignKey("Placement")]
-        //public int PlacementId { get; set; }
+        public int PlacementId { get; set; }
         //public Placement Placement { get; set; }
-
-        public Replacement()
-        {
-            CreateDate = DateTime.Now.ToLocalTime();
-        }   
     }
 }

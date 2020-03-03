@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Client.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
@@ -45,9 +47,9 @@ namespace Client.Controllers
         }
 
         [HttpPost]
-        public JsonResult Create(InterviewVM interview)
-        {
-            var postTask = client.PostAsJsonAsync("Interviews", interview).ToString();
+        public async Task<JsonResult> Create(InterviewVM interview)
+        {            
+            var postTask = await client.PostAsJsonAsync("Interviews", interview);
             return Json(new { data = postTask });
         }
 
@@ -103,5 +105,7 @@ namespace Client.Controllers
             }
             return sites;
         }
+
+
     }
 }

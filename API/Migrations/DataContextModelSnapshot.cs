@@ -17,54 +17,30 @@ namespace API.Migrations
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("API.Models.Department", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DivisionId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DivisionId");
-
-                    b.ToTable("Department");
-                });
-
-            modelBuilder.Entity("API.Models.Division", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Division");
-                });
-
             modelBuilder.Entity("API.Models.Employee", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<string>("DepartmentId");
+                    b.Property<DateTime>("CreateDate");
+
+                    b.Property<DateTime>("DeleteDate");
 
                     b.Property<string>("FirstName");
 
                     b.Property<string>("Gender");
 
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<string>("LastName");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("UpdateDate");
 
-                    b.HasIndex("DepartmentId");
+                    b.HasKey("Id");
 
                     b.ToTable("TB_M_Employees");
                 });
@@ -94,8 +70,6 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
                     b.HasIndex("SiteId");
 
                     b.ToTable("TB_T_Interviews");
@@ -124,8 +98,6 @@ namespace API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
-
                     b.HasIndex("SiteId");
 
                     b.ToTable("TB_T_Placements");
@@ -148,7 +120,7 @@ namespace API.Migrations
 
                     b.Property<DateTime>("RequestDate");
 
-                    b.Property<string>("Status");
+                    b.Property<bool>("Status");
 
                     b.Property<DateTime>("UpdateDate");
 
@@ -189,27 +161,45 @@ namespace API.Migrations
                     b.ToTable("TB_M_Sites");
                 });
 
-            modelBuilder.Entity("API.Models.Department", b =>
+            modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.HasOne("API.Models.Division", "Division")
-                        .WithMany()
-                        .HasForeignKey("DivisionId");
-                });
+                    b.Property<string>("Id");
 
-            modelBuilder.Entity("API.Models.Employee", b =>
-                {
-                    b.HasOne("API.Models.Department", "Department")
-                        .WithMany()
-                        .HasForeignKey("DepartmentId");
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("API.Models.Interview", b =>
                 {
-                    b.HasOne("API.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("API.Models.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")
@@ -218,11 +208,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Placement", b =>
                 {
-                    b.HasOne("API.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("API.Models.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")
@@ -234,6 +219,14 @@ namespace API.Migrations
                     b.HasOne("API.Models.Placement", "Placement")
                         .WithMany()
                         .HasForeignKey("PlacementId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("API.Models.User", b =>
+                {
+                    b.HasOne("API.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

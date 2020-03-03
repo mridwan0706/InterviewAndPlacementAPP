@@ -43,10 +43,11 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(TEntity entity)
         {
+            entity.Create();
             var data = await repository.PostAsync(entity);
             if (data > 0)
             {
-                return Ok("Data for Id=" + data + " Created.");
+                return Ok(data);
                 //entity = await repository.GetAsync(data);
                 //return Ok(entity);
             }
@@ -56,9 +57,9 @@ namespace API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, TEntity entity)
         {
-            var edit = await repository.GetAsync(id);
-            edit.Update();
-            var isSuccess = await repository.PullAsync(edit);
+            //var edit = await repository.GetAsync(id);
+            entity.Update();
+            var isSuccess = await repository.PullAsync(entity);
             if (isSuccess)
             {
                 return Ok("Update Succeed.");

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Client.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Client.Controllers
 {
@@ -18,13 +22,15 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
-            return View(List());
+            ViewBag.Sites = List();
+            return View();
         }
 
         [HttpGet]
-        public JsonResult List()
+        public IList<SiteVM> List()
+        //public JsonResult List()
         {
-            IEnumerable<SiteVM> sites = null;
+            IList<SiteVM> sites = null;
             var responseTask = client.GetAsync("Sites");
             responseTask.Wait();
             var result = responseTask.Result;
@@ -34,40 +40,61 @@ namespace Client.Controllers
                 readTask.Wait();
                 sites = readTask.Result;
             }
-            else
-            {
-                sites = Enumerable.Empty<SiteVM>();
-                ModelState.AddModelError(string.Empty, "404 Not Found");
-            }
-            return Json(new { data = sites });
+            return sites;
+            //return Json(new { data = sites });
         }
 
         [HttpPost]
-        public JsonResult Create(SiteVM interview)
+        public async Task<IActionResult> Create(SiteVM site)
         {
-            var postTask = client.PostAsJsonAsync("Sites", interview).ToString();
+            var context = JsonConvert.SerializeObject(site);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(context);
+            var byteContext = new ByteArrayContent(buffer);
+            byteContext.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var postTask = await client.PostAsync("Sites", byteContext);           
             return Json(new { data = postTask });
         }
 
-        [HttpPut]
-        public JsonResult Edit(int id, SiteVM site)
+        [HttpPost]
+        public async Task<JsonResult> Upload(IFormFile logo)
         {
-            var putTask = client.PutAsJsonAsync("Sites/" + id, site).ToString();
+            if (logo == null || logo.Length == 0)
+            {
+                return Json(null);
+            }
+            else
+            {
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", logo.FileName);
+                var stream = new FileStream(path, FileMode.Create);
+                await logo.CopyToAsync(stream);
+                return Json(logo.FileName);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Edit(int id, SiteVM site)
+        {
+            var context = JsonConvert.SerializeObject(site);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(context);
+            var byteContext = new ByteArrayContent(buffer);
+            byteContext.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var putTask = await client.PutAsync("Sites/" + id, byteContext);
             return Json(new { data = putTask });
         }
 
         [HttpDelete]
-        public JsonResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var deleteTask = client.DeleteAsync("Sites/" + id);
+            var deleteTask = await client.DeleteAsync("Sites/" + id);
             return Json(new { data = deleteTask });
         }
 
         [HttpGet]
-        public JsonResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
-            var responseTask = client.GetAsync("Sites/" + id).Result.Content.ReadAsAsync<SiteVM>().Result;
-            return Json(new { data = responseTask });
+            var responseTask = await client.GetAsync("Sites/" + id);
+            var site = await responseTask.Content.ReadAsAsync<SiteVM>();
+            return Json(new { data = site });
         }
     }
 }

@@ -30,3 +30,13 @@ C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacem
 C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Client.dll
 C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Client.pdb
 C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Client.csproj.CopyComplete
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Admin\Index.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Layout\Layout_Dashboard.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Layout\Layout_DashboardUser.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Login\Index.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Login\ResetPassword.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Sites\Index.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Users\MyProfile.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Interviews\Index.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Placements\Index.g.cshtml.cs
+C:\Users\fvrqo\OneDrive\Documents\Visual Studio 2017\Projects\InterviewAndPlacementAPP\Client\obj\Debug\netcoreapp2.1\Razor\Views\Users\Placement.g.cshtml.cs

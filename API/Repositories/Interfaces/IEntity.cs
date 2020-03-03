@@ -9,6 +9,7 @@ namespace API.Repositories.Interfaces
     {
         int Id { get; set; }
         bool IsDeleted { get; set; }
+        void Create();
         void Update();
         void Delete();
     }
