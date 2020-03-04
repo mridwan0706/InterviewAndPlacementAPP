@@ -12,5 +12,11 @@ namespace Client.Controllers
         {
             return View();
         }
+
+         public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Login");
+        }
     }
 }

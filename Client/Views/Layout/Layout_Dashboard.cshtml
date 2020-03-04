@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
+
 @{
     Layout = null;
 }
@@ -359,7 +360,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="@Url.Action("Logout","Admin")"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -382,7 +383,7 @@
                     <div class="profile-img"> <img src="~/images/users/1.jpg" alt="user" /> </div>
                     <!-- User profile text-->
                     <div class="profile-text mt-3 text-success">
-                        <a href="#" class="text-success"><span>@Context.Session.GetString("Username")</span><span class="caret"></span></a>                       
+                        <a href="#" class="text-success"><span>@*@Context.Session.GetString("Username")*@</span><span class="caret"></span></a>                       
                     </div>
                 </div>
                 <!-- End User profile text-->
@@ -391,10 +392,14 @@
                     <ul id="sidebarnav">
 
                         <li>
-                            <a href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
+                            <a href="@Url.Action("Index","Admin")" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
                         </li>
                         <li>
-                            <a href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Interview</span></a>
+                            <a href="@Url.Action("Index","Interviews")" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Interview</span></a>
+                            <ul aria-expanded="true" class="collapse">
+                                <li><a href="@Url.Action("Index","Interviews")">Invitation Interview</a></li>
+                                <li><a href="@Url.Action("Approve","Interviews")">Approver</a></li>
+                            </ul>
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Placement</span></a>

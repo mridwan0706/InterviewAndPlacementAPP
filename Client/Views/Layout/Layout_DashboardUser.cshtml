@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Http
-
 @{
     Layout = null;
 }
@@ -18,7 +17,8 @@
     <link rel="icon" type="image/png" sizes="16x16" href="~/images/favicon.png">
     <title>Interview And Placement - MII</title>
     <!-- Bootstrap Core CSS -->
-    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   
+    <link href="~/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">   
     <link href="~/plugins/wizard/steps.css" rel="stylesheet">
     <!--alerts CSS -->
     <link href="~/plugins/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
@@ -333,8 +333,8 @@
                                         <div class="dw-user-box">
                                             <div class="u-img"><img src="~/images/users/1.jpg" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted font-14">@Context.Session.GetString("Username")</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                                <h4>Steave Jobs</h4>                                               
+                                                <p class="text-muted font-14">@Context.Session.GetString("Username") </p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
                                             </div>
                                         </div>
                                     </li>
@@ -345,7 +345,7 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li><a href="@Url.Action("Logout","Users")"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -368,7 +368,8 @@
                     <div class="profile-img"> <img src="~/images/users/1.jpg" alt="user" /> </div>
                     <!-- User profile text-->
                     <div class="profile-text mt-3 text-success">
-                        <a href="#" class="text-success"><span>@*@Context.Session.GetString("Username")*@</span><span class="caret"></span></a>
+                        <a href="#" class="text-success"><span>@Context.Session.GetString("Username")</span><span class="caret"></span></a>
+                        <span>@Context.Session.GetString("UserId")</span> 
                     </div>
                 </div>
                 <!-- End User profile text-->
@@ -380,7 +381,7 @@
                             <a href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard</span></a>
                         </li>
                         <li>
-                            <a href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Interview</span></a>
+                            <a href="@Url.Action("Interview","Users")" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Interview</span></a>                            
                         </li>
                         <li>
                             <a class="has-arrow" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Placement</span></a>

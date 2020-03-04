@@ -1,7 +1,7 @@
 ﻿
 @{
-    ViewData["Title"] = "Approve";
-    Layout = "~/Views/Layout/Layout_Dashboard.cshtml";
+    ViewData["Title"] = "Interview";
+    Layout = "~/Views/Layout/Layout_DashboardUser.cshtml";
 }
 
 
@@ -11,85 +11,81 @@
     <!-- ============================================================== -->
     <div class="row page-titles">
         <div class="col-md-6 col-8 align-self-center">
-            <h3 class="text-themecolor m-b-0 m-t-0">Interview</h3>
+            <h3 class="text-themecolor m-b-0 m-t-0">Forms</h3>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                <li class="breadcrumb-item active">Interview</li>
+                <li class="breadcrumb-item active">Form</li>
             </ol>
         </div>
-        <div class="col-lg-12 col-4 align-self-center">
+        <div class="col-md-6 col-4 align-self-center">
             <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
-            <div class="nav-item dropdown mega-dropdown">
-                <button class="btn pull-right btn-success waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-plus-circle"></i> Create</button>
-
-            </div>
-
-            <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
-
-            </div>
-
+            <button class="btn pull-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i> Create</button>
             <div class="dropdown pull-right m-r-10 hidden-sm-down">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> January 2017 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February 2017</a> <a class="dropdown-item" href="#">March 2017</a> <a class="dropdown-item" href="#">April 2017</a> </div>
             </div>
         </div>
-    </div>  
-
-    <!-- END Modal -->
+    </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Data Approver Interviews</h4>
-
-                    <div class="table-responsive m-t-40">
-                        <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Interview Date</th>
-                                    <th>Site Name</th>
-                                    <th>Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Name</th>
-                                    <th>Invitation Date</th>
-                                    <th>Site Name</th>
-                                    <th>Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                
-
-                                    @foreach (var result in ViewBag.Ready)
-                                    {
-                                     <tr>
-                                         <td></td>
-                                         <td>@result.EmployeeName</td>
-                                         <td>@Convert.ToDateTime(result.InterviewDate).ToShortDateString()</td>
-                                         <td>@result.SiteName</td>                                           
-                                         <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@result.Status</span></td>                                          
-                                         <td class="text-center"><span class="label label-info text-center">Accept</span> | <span class="label label-danger text-center">Reject</span></td>
-                                </tr>
-                                }                                      
-                        </table>
+ 
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body p-b-0">
+                <h4 class="card-title">Invitation Interview</h4>               
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs customtab2" role="tablist" style="width:100%;">
+                    <li class="nav-item" style="width:50%;"> <a class="nav-link active" data-toggle="tab" href="#home7" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Active</span></a> </li>
+                    <li class="nav-item" style="width:50%;"> <a class="nav-link" data-toggle="tab" href="#profile7" role="tab"><span class="hidden-sm-up"><i class="ti-user"></i></span> <span class="hidden-xs-down">Done</span></a> </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home7" role="tabpanel">
+                        <div class="p-20">
+                            <!-- Card -->
+                            <div class="card ">
+                                <div class="card-header text-center">
+                                    <h4 class="card-title text-center">Interview Invitation</h4>
+                                </div>
+                                <div class="card-body border">
+                                    <div class="row">
+                                        <div class="col-12">
+                                           <span class="label label-danger p-2  mb-1">Waiting Confirmation</span> 
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
+                                        </div>
+                                        <div class="col-md-4 ">
+                                            <h4 class="bold mt-3">BNI PENJOMPONGAN</h4>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="label label-warning text-center" style="width:50%;">27-March-2020</span><br />
+                                            <span class="label label-warning text-center" style="width:50%;">10:00 AM</span>
+                                         </div>
+                                        <div class="col-md-2">
+                                            <button class="btn btn-primary">View Detail</button>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                                <div class="card-footer text-center border">
+                                    <span class="label label-danger">2 Days ago</span>
+                                </div>
+                            </div>
+                            <!-- Card -->
+                        </div>
                     </div>
+                    <div class="tab-pane  p-20" id="profile7" role="tabpanel"></div>                    
                 </div>
             </div>
         </div>
     </div>
+
     <!-- ============================================================== -->
     <!-- End PAge Content -->
     <!-- ============================================================== -->
@@ -153,7 +149,6 @@
 </div>
 
 @section Scripts{
-
     <script src="~/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap tether Core JavaScript -->
     <script src="~/plugins/bootstrap/js/popper.min.js"></script>
@@ -168,58 +163,67 @@
     <script src="~/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <!--Custom JavaScript -->
     <script src="~/js/custom.min.js"></script>
-    <!-- This is data table -->
-    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
-    <!-- bootstrap time picker -->
-    <script src="~/plugins/timepicker/js/bootstrap-timepicker.min.js"></script>
-    <!-- This page plugins -->
+    <script src="~/plugins/moment/min/moment.min.js"></script>
+    <script src="~/plugins/wizard/jquery.steps.min.js"></script>
+    <script src="~/plugins/wizard/jquery.validate.min.js"></script>
+    <!-- Sweet-Alert  -->
+    @*<script src="~/plugins/sweetalert/sweetalert.min.js"></script>*@
+    <script src="~/plugins/wizard/steps.js"></script>
     <!-- ============================================================== -->
-    <script src="~/plugins/switchery/dist/switchery.min.js"></script>
-    <script src="~/plugins/select2/dist/js/select2.full.min.js" type="text/javascript"></script>
-    <script src="~/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
-    <script src="~/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
-    <script src="~/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
-    <script type="text/javascript" src="~/plugins/multiselect/js/jquery.multi-select.js"></script>
-
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
-    <!--Datepicker-->
-    <script src="~/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <!-- end - This is for export functionality only -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
     <script src="~/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
     <script>
-
-
-        $(document).ready(function () {
+        function Accept() {
             debugger;
-            tabel = $("#example23").DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    // 'copy', 'csv', 'excel', 'pdf', 'print'
-                    'excel', 'pdf', 'print'
-                ],
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 0
-                }],
-                "order": [[1, 'asc']]
-            });
-            tabel.on('order.dt search.dt', function () {
-                tabel.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            }).draw();
-        });
+            var interview = new Object();
+            interview.EmployeeId = 1;
+            interview.Status = "Interview Accept"; //Waitting, Decline Interview, Accept Interview, Interview Done, Interview Failed, Interview Success
+            $.ajax({
+                "url": "/Interviews/AcceptInterview",
+                "type": "PUT",
+                "dataType": "json",
+                "data": interview
+            }).then((result) => {
+                debugger
+                if (result.statusCode == 200) {
+                    Swal.fire(
+                        'Success!',
+                        'Login Success',
+                        'success')
+                }
+            })
+        }
+        function Decline() {
+            var interview = new Object();
+            interview.Status = "Decline Interview"; //Waitting, Decline Interview, Accept Interview, Interview Done, Interview Failed, Interview Success
+            interview.Reason = $("#ReasonText").val();
+            $.ajax({
+                "url": "/Users/DeclineInterview",
+                "type": "Post",
+                "dataType": "json",
+                "data": interview
+            }).then((result) => {
+                debugger
+                if (result.statusCode == 200) {
+                    Swal.fire(
+                        'Success!',
+                        'Login Success',
+                        'success').then(() => {
+                            $("#MyModal").close();
+                        });
+                }
+                else {
+                    Swal.fire(
+                        'Failed!',
+                        'Oops.',
+                        'failed'
+                    )
+                }
+            })
+        }
     </script>
-
 }
+
 

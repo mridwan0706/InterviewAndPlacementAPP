@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Detail";
     Layout = "~/Views/Layout/Layout_DashboardUser.cshtml";
@@ -43,7 +43,6 @@
                         <section>
                             <div class="row">
                                 <div class="col-12 m-t-30">
-
                                     <!-- Card -->
                                     <div class="card ">
                                         <div class="card-header text-center card-primary">
@@ -105,7 +104,7 @@
                                         </div>
                                         <div class="card-body border text-center">
                                             <h2 class="card-title">Please, Confirmation Your Attend for Interview.</h2>
-                                            <a class="btn btn-success" onclick="Accept()">Accept</a> | <a class="btn btn-danger" onclick="Decline()">Decline</a>
+                                            <a class="btn btn-success" onclick="Confirm()">Accept</a> | <a class="btn btn-danger" onclick="Decline()">Decline</a>
                                         </div>
                                         <div class="card-footer text-center">
                                         </div>
@@ -117,99 +116,54 @@
 
                         </section>
                         <!-- Step 3 -->
-                        <h6>Interview</h6>
-                        <section>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="int1">Interview For :</label>
-                                        <input type="text" class="form-control" id="int1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="intType1">Interview Type :</label>
-                                        <select class="custom-select form-control" id="intType1" data-placeholder="Type to search cities" name="intType1">
-                                            <option value="Banquet">Normal</option>
-                                            <option value="Fund Raiser">Difficult</option>
-                                            <option value="Dinner Party">Hard</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="Location1">Location :</label>
-                                        <select class="custom-select form-control" id="Location1" name="location">
-                                            <option value="">Select City</option>
-                                            <option value="India">India</option>
-                                            <option value="USA">USA</option>
-                                            <option value="Dubai">Dubai</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="jobTitle2">Interview Date :</label>
-                                        <input type="date" class="form-control" id="jobTitle2">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Requirements :</label>
-                                        <div class="c-inputs-stacked">
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">Employee</span>
-                                            </label>
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">Contract</span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <!-- Step 4 -->
                         <h6>Interview Result</h6>
                         <section>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="behName1">Behaviour :</label>
-                                        <input type="text" class="form-control" id="behName1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="participants1">Confidance</label>
-                                        <input type="text" class="form-control" id="participants1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="participants1">Result</label>
-                                        <select class="custom-select form-control" id="participants1" name="location">
-                                            <option value="">Select Result</option>
-                                            <option value="Selected">Selected</option>
-                                            <option value="Rejected">Rejected</option>
-                                            <option value="Call Second-time">Call Second-time</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="decisions1">Comments</label>
-                                        <textarea name="decisions" id="decisions1" rows="4" class="form-control"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Rate Interviwer :</label>
-                                        <div class="c-inputs-stacked">
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">1 star</span>
-                                            </label>
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">2 star</span>
-                                            </label>
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">3 star</span>
-                                            </label>
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">4 star</span>
-                                            </label>
-                                            <label class="inline custom-control custom-checkbox block">
-                                                <input type="checkbox" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description ml-0">5 star</span>
-                                            </label>
+                                <div class="col-12 m-t-30">
+                                    <!-- Card -->
+                                    <div class="card ">
+                                        <div class="card-header text-center card-primary">
+                                            <h4 class="card-title text-center">CONGRATULATION</h4>
+                                        </div>
+                                        <div class="card-body border">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <h6>Selamat Anda Telah diterima di <span class="label label-success">BNI PENJOMPONGAN</span> dengan detail sebagai berikut : </h6>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="label label-success p-2 d-flex float-right" style="margin-top:-10px;">Accepted Placements</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
+                                                </div>
+                                                <div class="col-md-5 ">
+                                                    <div class="row">
+                                                        <div class="col-4"><span><i class=" fa fa-phone-square"></i> Phone</span></div>
+                                                        <div>:</div>
+                                                        <div class="col-7"><span>089632323104</span></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-4"><span><i class="fa fa-location-arrow"></i> Address</span></div>
+                                                        <div>:</div>
+                                                        <div class="col-7"><span>Tanjung Duren 4 RT 04/RW 05 Jakarta Barat</span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="col-4"><span><i class="fa fa-calendar"></i> Join Date</span></div>
+                                                        <div>:</div>
+                                                        <div class="col-7"><span class="label label-danger text-center" style="width:40%;">1/4/2020</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center border">
+                                            <span class="label label-danger">2 Days ago</span>
                                         </div>
                                     </div>
+                                    <!-- Card -->
                                 </div>
                             </div>
                         </section>
@@ -300,7 +254,8 @@
     <script src="~/plugins/wizard/jquery.steps.min.js"></script>
     <script src="~/plugins/wizard/jquery.validate.min.js"></script>
     <!-- Sweet-Alert  -->
-    <script src="~/plugins/sweetalert/sweetalert.min.js"></script>
+    @*<script src="~/plugins/sweetalert/sweetalert.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="~/plugins/wizard/steps.js"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
@@ -308,27 +263,48 @@
     <script src="~/plugins/styleswitcher/jQuery.style.switcher.js"></script>
 
     <script>
-        function Accept() {
-            debugger;
-            var interview = new Object();
-            interview.EmployeeId =1;
-            interview.Status = "Interview Accept"; //Waitting, Decline Interview, Accept Interview, Interview Done, Interview Failed, Interview Success
-            $.ajax({
-                "url": "/Interviews/AcceptInterview",
-                "type": "PUT",
-                "dataType": "json",
-                "data": interview
+        function Confirm() {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You Want to Attending the Invitation",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, I Agree it!'
             }).then((result) => {
-                debugger
-                if (result.statusCode == 200) {
-                    Swal.fire(
-                        'Success!',
-                        'Login Success',
-                        'success')
-                }               
+                debugger;
+                if (result.value) {
+                    debugger;
+                    var interview = new Object();
+                    interview.EmployeeId = 1;
+                    interview.Status = "Ready Interview";
+                    $.ajax({
+                        "url": "/Interviews/AcceptInterview",
+                        "type": "PUT",
+                        "dataType": "json",
+                        "data": interview
+                    }).then((result) => {
+                        if (result.data !=0) {
+                            Swal.fire(
+                                'Success',
+                                'You Agree With Interview Invitation',
+                                'success'
+                            );
+
+                        } else {
+                            Swal.fire(
+                                'Failed',
+                                'Your Not Agree With Interview Invitation',
+                                'failed'
+                            );
+                        }
+                    })
+                }
             })
-        }
+        } 
         function Decline() {
+
             var interview = new Object();
             interview.Status = "Decline Interview"; //Waitting, Decline Interview, Accept Interview, Interview Done, Interview Failed, Interview Success
             interview.Reason = $("#ReasonText").val();
@@ -344,7 +320,7 @@
                         'Success!',
                         'Login Success',
                         'success').then(() => {
-                            $("#MyModal").close();                            
+                            $("#MyModal").close();
                         });
                 }
                 else {

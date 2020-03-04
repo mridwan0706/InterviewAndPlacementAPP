@@ -157,19 +157,29 @@
                             <tbody>
                                 @foreach (var interview in ViewBag.Interviews)
                                 {
-                                    <tr>
-                                        <td></td>
-                                        <td>@interview.EmployeeName</td>
-                                        <td>@Convert.ToDateTime(interview.InterviewDate).ToShortDateString() </td>
-                                        <td>@interview.SiteName</td>
-                                        @if (interview.Status == "Waiting")
-                                        {
-                                            <td><span class="label label-danger text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
-                                        }@if (interview.Status == "Interview Accept")
-                                        {
-                                            <td><span class="label label-success text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
-                                        }
-                                    </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>@interview.EmployeeName</td>
+                                    <td>@Convert.ToDateTime(interview.InterviewDate).ToString("dd-MMMM-yyyy") </td>
+
+                                    <td>@interview.SiteName</td>
+                                    @if (interview.Status == "Waiting Interview")
+                                    {
+                                        <td><span class="label label-danger text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                    }@if (interview.Status == "Interview Done")
+                                    {
+                                        <td><span class="label label-success text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                    }@if (interview.Status == "Waiting Result")
+                                    {
+                                        <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                    }@if (interview.Status == "Accept Placement")
+                                    {
+                                        <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                    }@if(interview.Status == "Failed Placement")
+                                    {
+                                        <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                    }
+                                </tr>
                                 }
                         </table>
                     </div>
@@ -280,8 +290,8 @@
     <!-- end - This is for export functionality only -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-    <script>   
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
 
         $(document).ready(function () {
             debugger;
@@ -377,14 +387,7 @@
                 templateResult: formatRepo, // omitted for brevity, see the source of this page
                 templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
             });
-        });
-        $('#example233').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                // 'copy', 'csv', 'excel', 'pdf', 'print'
-                'excel', 'pdf', 'print'
-            ]
-        });
+        });       
 
         //Date picker
         $('#datepicker').datepicker({
@@ -394,7 +397,7 @@
         $('.timepicker').timepicker({
             showInputs: false
         })
-
+               
     </script>
     <!-- ============================================================== -->
     <!-- Style switcher -->

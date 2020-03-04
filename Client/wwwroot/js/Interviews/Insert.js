@@ -1,9 +1,10 @@
 ﻿function Insert() {
     debugger;
+    var Date = $(".InterviewDate").val();
+    var Time = $("#InterviewTime").val();
     var interview = new Object();
-    interview.Status = "Waiting";
-    interview.InterviewDate = $(".InterviewDate").val();
-    interview.InterviewTime = $("#InterviewTime").val();
+    interview.Status = "Waiting Confirmation";    
+    interview.InterviewDate = Date + " " + Time;    
     interview.Note = $("#NoteText").val(); 
     interview.SiteId = $("#SiteText").val(); 
     interview.EmployeeId = $("#InvitationInterview").val();  
@@ -17,10 +18,10 @@
         if (result.statusCode == 200) {
             Swal.fire(
                 'Success!',
-                'Data Success Inserted Success',
+                'Data Inserted Success',
                 'success').then(() => {
                     $("#example23").DataTable().ajax.reload();
-                });
+                })
         }
         else {
             Swal.fire(

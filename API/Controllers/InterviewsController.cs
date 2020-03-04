@@ -20,30 +20,30 @@ namespace API.Controllers
     {
         private MySQLDatabase _mysql;
         DynamicParameters param = new DynamicParameters();
-        public InterviewsController(InterviewRepository interviewRepository, MySQLDatabase mySQL): base(interviewRepository){
+        public InterviewsController(InterviewRepository interviewRepository, MySQLDatabase mySQL) : base(interviewRepository) {
             _mysql = mySQL;
         }
 
-        [Route("{getall}")]
-        [HttpGet]
+        [Route("getall")]
+        [HttpGet("getall")]
         public IActionResult GetAll()
         {
             var users = _mysql.Connection.QueryAsync<InterviewVM>("Call SP_GetAllInterview").Result.ToList();
             return Ok(users);
         }
 
-       
-        [HttpGet("GetInterviewById/{id}")]
-        public IActionResult GetById(int id)
+
+        [HttpGet("GetAllByEmployeeId/{EmployeeId}")]
+        public IActionResult GetById(int EmployeeId)
         {
             var sql = "SP_GetInterviewById";
-            param.Add("EmployeeId", id);
+            param.Add("Eid", EmployeeId);
             var users = _mysql.Connection.QueryAsync<InterviewVM>(sql, param, commandType: System.Data.CommandType.StoredProcedure).Result.ToList();
             return Ok(users);
         }
-        
 
-         [HttpGet("GetInterviewByStatus/{Status}")]
+
+        [HttpGet("GetInterviewByStatus/{Status}")]
         public IActionResult GetByStatus(string Status)
         {
             var sql = "SP_GetInterviewByStatus";
@@ -52,11 +52,11 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        [HttpPut("Status/{id}")]
-        public async Task<ActionResult> UpdateStatus(int id, InterviewVM interviewVM)
+        [HttpPut("UpdateStatus/{EmployeeId}")]
+        public async Task<ActionResult> UpdateStatus(int EmployeeId, InterviewVM interviewVM)
         {
             var sql = "SP_Update_StatusInterview";
-            param.Add("EId", id);
+            param.Add("EId", EmployeeId);
             param.Add("IStatus", interviewVM.Status);
             var affectedRow = await _mysql.Connection.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
             return Ok(affectedRow);

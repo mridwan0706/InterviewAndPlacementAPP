@@ -9,6 +9,7 @@
     <Controller_SelectedScaffolderCategoryPath>root/Controller</Controller_SelectedScaffolderCategoryPath>
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
-    <WebStackScaffolding_LayoutPageFile>~/Views/Layout/Layout_Dashboard.cshtml</WebStackScaffolding_LayoutPageFile>
+    <WebStackScaffolding_LayoutPageFile>~/Views/Layout/Layout_DashboardUser.cshtml</WebStackScaffolding_LayoutPageFile>
+    <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
 </Project>
