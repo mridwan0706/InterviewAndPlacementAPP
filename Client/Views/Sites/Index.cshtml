@@ -1,0 +1,398 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layout/Layout_Dashboard.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="row page-titles">
+        <div class="col-md-6 col-8 align-self-center">
+            <h3 class="text-themecolor m-b-0 m-t-0">Manage Sites</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                <li class="breadcrumb-item active">Sites</li>
+            </ol>
+        </div>
+        <div class="col-md-6 col-4 align-self-center">
+            <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
+            <a href="#" onclick="PopUpForm()" class="btn pull-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i>Create</a>
+
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    @*<h4 class="card-title">Data Export</h4>
+                        <h6 class="card-subtitle">Export data to Excel, PDF & Print</h6>*@
+                    <div class="table-responsive m-t-40">
+                        <table id="tabel" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Logo</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    @*<th>Phone</th>
+                                        <th>Email</th>*@
+                                    <th>PIC</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th></th>
+                                    <th>Logo</th>
+                                    <th>Name</th>
+                                    <th>Address</th>
+                                    @*<th>Phone</th>
+                                        <th>Email</th>*@
+                                    <th>PIC</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                @foreach (var site in ViewBag.Sites)
+                                {
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <img src="~/images/@site.Logo" alt="logo" height="50" />
+                                        </td>
+                                        <td>@site.Name</td>
+                                        <td>@site.Address</td>
+                                        @*<td>@site.Phone</td>
+                                            <td>@site.Email</td>*@
+                                        <td>@site.PIC</td>
+                                        <td>
+                                            <a href="#" onclick=GetById(@site.Id); data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
+                                            <a href="#" onclick=Delete(@site.Id); data-toggle="tooltip" data-original-title="Delete"> <i class="fa fa-close text-danger"></i> </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End PAge Content -->
+    <!-- ============================================================== -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">X</button>
+                    <h3 class="modal-title" id="myModalLabel">Site Form</h3>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-6">
+                        <div id="idform" class="form-group">
+                            <label for="sid">Id</label>
+                            <input type="text" class="form-control" id="sid" placeholder="Id" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sname">Name</label>
+                            <input type="text" class="form-control" id="sname" placeholder="Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="saddress">Address</label>
+                            <input type="text" class="form-control" id="saddress" placeholder="Address" />
+                        </div>
+                        <div class="form-group">
+                            <label for="sphone">Phone</label>
+                            <input type="tel" class="form-control" id="sphone" placeholder="Phone" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="semail">Email</label>
+                            <input type="email" class="form-control" id="semail" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="pic">PIC</label>
+                            <input type="text" class="form-control" id="pic" placeholder="PIC" />
+                        </div>
+                        <div class="form-group">
+                            <label for="slogo">Logo</label>
+                            <input type="file" name="file" class="form-control" id="slogo" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="Save" onclick="Save();">Save</button>
+                    <button type="button" class="btn btn-primary" id="Update" onclick="Validate();">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- Right sidebar -->
+    <!-- ============================================================== -->
+    <!-- .right-sidebar -->
+    <div class="right-sidebar">
+        <div class="slimscrollright">
+            <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
+            <div class="r-panel-body">
+                <ul id="themecolors" class="m-t-20">
+                    <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
+                    <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
+                    <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
+                    <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
+                    <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
+                    <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Right sidebar -->
+    <!-- ============================================================== -->
+</div>
+
+@section Scripts{
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="~/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <script src="~/js/jquery.slimscroll.js"></script>
+    <!--Wave Effects -->
+    <script src="~/js/waves.js"></script>
+    <!--Menu sidebar -->
+    <script src="~/js/sidebarmenu.js"></script>
+    <!--stickey kit -->
+    <script src="~/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!--Custom JavaScript -->
+    <script src="~/js/custom.min.js"></script>
+    <!-- This is data table -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <!-- start - This is for export functionality only -->
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <!-- end - This is for export functionality only -->
+    
+    <script src="~/plugins/bootstrap-select/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $('#tabel').DataTable({
+                //"ajax": {
+                //    "url": "/Sites/List",
+                //    "type": "GET",
+                //    "dataType": "json"
+                //},
+                //"columns": [
+                //    { "data": null },
+                //    {
+                //        "render": function (data, type, row) {
+                //            return "<img src='https://localhost:44397/images/" + row.logo + "' alt='logo' height='50' />"
+                //        }
+                //    },
+                //    { "data": "name" },
+                //    { "data": "address" },
+                //    //{ "data": "phone" },
+                //    //{ "data": "email" },
+                //    { "data": "pic" },
+                //    {
+                //        "render": function (data, type, row) {
+                //            return "<a href='#' data-toggle='tooltip' data-placement='left' title='Edit' class='btn btn-warning' onclick=GetById('" + row.Id + "');><i class='fa fa-pencil'></i> Edit</a> |" +
+                //                " <a href='#' data-toggle='tooltip' data-placement='right' title='Delete' class='btn btn-danger' onclick=Delete('" + row.Id + "');><i class='fa fa-trash'></i> Delete</a > ";
+                //        }
+                //    }
+                //],
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ],
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 7
+                }],
+                "order": [[1, 'asc']]
+            });
+
+            table.on('order.dt search.dt', function () {
+                table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+
+        function Validate() {
+            debugger;
+            if ($("#sname").val() == "" || $("#sname").val() == " ") {
+                Swal.fire('Please Fill Name');
+            }
+            else if ($("#sid").val() == "") {
+                Save();
+            } else {
+                Edit();
+            }
+        }
+
+        function PopUpForm() {
+            $("#idform").hide();
+            $("#sid").val('');
+            $("#sname").val('');
+            $("#saddress").val('');
+            $("#sphone").val('');
+            $("#semail").val('');
+            $("#pic").val('');
+            $("#slogo").val('');
+            $("#myModal").modal('show');
+            $("#Update").hide();
+            $('#Save').show();
+        }
+
+        function Save() {
+            var site = new Object();
+            site.Name = $("#sname").val();
+            site.Address = $("#saddress").val();
+            site.Phone = $("#sphone").val();
+            site.Email = $("#semail").val();
+            site.PIC = $("#pic").val();
+            debugger;
+            var logo = document.getElementById("slogo");
+            site.Logo = logo.value.replace('C:\\fakepath\\', '');
+            //var file = logo.file;
+            //var formData = new FormData();
+            //formData.append("logo", file);
+            debugger;
+            //$.ajax({
+            //    url: "/Sites/Upload",
+            //    type: "POST",
+            //    dataType: "json",
+            //    data: formData,
+            //    contentType: false,
+            //    processData: false
+            //}).then((result) => {
+            //    site.Logo = result;
+            //    debugger;
+            $.ajax({
+                "url": "/Sites/Create",
+                "type": "POST",
+                "datatype": "json",
+                "data": site
+            }).then((result) => {
+                if (result.data != 0) {
+                    Swal.fire('Success', 'Your file has been inserted.', 'success');
+                    //$('#tabel').DataTable().ajax.reload();
+                    table.ajax.reload();
+                } else {
+                    Swal.fire('Failed', 'Your file not inserted.', 'failed')
+                }
+            })
+            $("#myModal").modal('hide');
+            //})
+        }
+
+        function Delete(Id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'red',
+                cancelButtonColor: 'green',
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                debugger;
+                if (result.value) {
+                    $.ajax({
+                        url: "/Sites/Delete/",
+                        datatype: "json",
+                        type: "DELETE",
+                        data: { id: Id }
+                    }).then((result) => {
+                        debugger;
+                        if (result.data != null) {
+                            //$('#tabel').DataTable().ajax.reload();
+                            Swal.fire('Success', 'Your file has been deleted.', 'success');
+                            table.ajax.reload();
+                        } else {
+                            Swal.fire('Failed', 'Your file not deleted.', 'failed')
+                        }
+                    })
+                }
+            })
+        }
+
+        function GetById(Id) {
+            debugger;
+            $.ajax({
+                "url": "/Sites/Detail/",
+                "type": "GET",
+                "dataType": "json"
+                , "data": { id: Id }
+            }).then((result) => {
+                debugger;
+                $("#idform").show();
+                document.getElementById("sid").disabled = true;
+                $("#sid").val(result.data.id);
+                $("#sname").val(result.data.name);
+                $("#saddress").val(result.data.address);
+                $("#sphone").val(result.data.phone);
+                $("#semail").val(result.data.email);
+                $("#pic").val(result.data.pic);
+                $("#slogo").value = result.data.logo;
+                $("#myModal").modal('show');
+                $("#Update").show();
+                $("#Save").hide();
+            });
+        }
+
+        function Edit() {
+            var site = new Object();
+            site.Id = $("#sid").val();
+            site.Name = $("#sname").val();
+            site.Address = $("#saddress").val();
+            site.Phone = $("#sphone").val();
+            site.Email = $("#semail").val();
+            site.PIC = $("#pic").val();
+            var logo = document.getElementById("slogo");
+            site.Logo = logo.value.replace('C:\\fakepath\\', '');
+            debugger;
+            $.ajax({
+                "url": "/Sites/Edit/",
+                "datatype": "json",
+                "type": "PUT",
+                "data": site
+            }).then((result) => {
+                debugger;
+                if (result.data != 0) {
+                    Swal.fire('Success', 'Your file has been updated.', 'success');
+                    //$('#tabel').DataTable().ajax.reload();
+                    table.ajax.reload();
+                } else {
+                    Swal.fire('Failed', 'Your file not updated.', 'failed')
+                }
+            })
+            $("#myModal").modal('hide');
+        }
+
+    </script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="~/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+}
