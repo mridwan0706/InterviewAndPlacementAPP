@@ -12717,23 +12717,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gemboel\\.nuget\\packages\\": {},
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\Client\\Client.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\Client\\Client.csproj",
       "projectName": "Client",
-      "projectPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\Client\\Client.csproj",
-      "packagesPath": "C:\\Users\\Gemboel\\.nuget\\packages\\",
-      "outputPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\Client\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\Client\\Client.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Gemboel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12746,8 +12746,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\API\\API.csproj": {
-              "projectPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\API\\API.csproj"
+            "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\API\\API.csproj": {
+              "projectPath": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\API\\API.csproj"
             }
           }
         }

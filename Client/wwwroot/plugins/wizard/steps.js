@@ -1,4 +1,4 @@
-$(".tab-wizard").steps({
+$(".tab-wizard").steps({    
     headerTag: "h6"
     , bodyTag: "section"
     , transitionEffect: "fade"
@@ -7,7 +7,14 @@ $(".tab-wizard").steps({
         finish: "Submit"
     }
     , onFinished: function (event, currentIndex) {
-       swal("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1500
+          })
+    //    swal.fire("Form Submitted!", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed lorem erat eleifend ex semper, lobortis purus sed.");
             
     }
 });

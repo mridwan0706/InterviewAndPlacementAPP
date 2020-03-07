@@ -16,15 +16,21 @@ namespace API.Models
         public DateTime DeleteDate { get; set; }
         public bool IsDeleted { get; set; } = false;
 
-        public void Update()
+
+        public void Create()
         {
-            UpdateDate = DateTime.Now.ToLocalTime();
+            CreateDate = DateTime.Now;
         }
+
         public void Delete()
         {
             IsDeleted = true;
-            DeleteDate = DateTime.Now.ToLocalTime();
+            DeleteDate = DateTime.Now;
         }
-       
+
+        public void Update()
+        {
+            UpdateDate = DateTime.Now;
+        }
     }
 }

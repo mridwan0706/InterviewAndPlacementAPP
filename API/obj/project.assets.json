@@ -12697,23 +12697,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Gemboel\\.nuget\\packages\\": {},
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\API\\API.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\API\\API.csproj",
-      "packagesPath": "C:\\Users\\Gemboel\\.nuget\\packages\\",
-      "outputPath": "E:\\Tugas Akhir\\InterviewAndPlacementAPP\\API\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\API\\API.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\Documents\\InterviewAndPlacement\\API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Gemboel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

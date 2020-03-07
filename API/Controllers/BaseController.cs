@@ -40,6 +40,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult>Post(TEntity entity)
         {
+            entity.Create();
             var data = await repository.PostAsync(entity);
             if (data > 0)
             {

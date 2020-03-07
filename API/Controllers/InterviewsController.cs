@@ -31,17 +31,24 @@ namespace API.Controllers
             var users = _mysql.Connection.QueryAsync<InterviewVM>("Call SP_GetAllInterview").Result.ToList();
             return Ok(users);
         }
-
-
-        [HttpGet("GetAllByEmployeeId/{EmployeeId}")]
-        public IActionResult GetById(int EmployeeId)
+        //with Join
+        [Route("GetAllByInterviewId/{Id}")]
+        [HttpGet("GetAllByInterviewId/{Id}")]
+        public IActionResult GetAllByInterviewId(int Id)
         {
-            var sql = "SP_GetInterviewById";
-            param.Add("Eid", EmployeeId);
+            var sql = "SP_GetAllByInterviewId";
+            param.Add("InterviewId", Id);
+            var interviews = _mysql.Connection.QueryAsync<InterviewVM>(sql, param, commandType: System.Data.CommandType.StoredProcedure).Result.ToList();
+            return Ok(interviews);
+        }
+
+        [HttpGet("GetByUserId/{ParticipantId}")]
+        public IActionResult GetById(string ParticipantId)        {
+            var sql = "SP_GetAllByUserId";
+            param.Add("Eid", ParticipantId);           
             var users = _mysql.Connection.QueryAsync<InterviewVM>(sql, param, commandType: System.Data.CommandType.StoredProcedure).Result.ToList();
             return Ok(users);
         }
-
 
         [HttpGet("GetInterviewByStatus/{Status}")]
         public IActionResult GetByStatus(string Status)
@@ -52,11 +59,12 @@ namespace API.Controllers
             return Ok(users);
         }
 
-        [HttpPut("UpdateStatus/{EmployeeId}")]
-        public async Task<ActionResult> UpdateStatus(int EmployeeId, InterviewVM interviewVM)
+        [Route("UpdateStatus/{Id}")]
+        [HttpPut("UpdateStatus/{Id}")]
+        public async Task<ActionResult> UpdateStatus(int Id, InterviewVM interviewVM)
         {
             var sql = "SP_Update_StatusInterview";
-            param.Add("EId", EmployeeId);
+            param.Add("InterviewId", Id);
             param.Add("IStatus", interviewVM.Status);
             var affectedRow = await _mysql.Connection.ExecuteAsync(sql, param, commandType: CommandType.StoredProcedure);
             return Ok(affectedRow);

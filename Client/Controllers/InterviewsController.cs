@@ -14,21 +14,33 @@ namespace Client.Controllers
 {
     public class InterviewsController : Controller
     {
-        private readonly HttpClient client = new HttpClient();        
+        private readonly HttpClient client = new HttpClient();
+        private readonly HttpClient server = new HttpClient();
         public InterviewsController()
         {
-            client.BaseAddress = new Uri("https://localhost:44306/api/");            
+            client.BaseAddress = new Uri("https://localhost:44306/api/");
+            server.BaseAddress = new Uri("http://192.168.128.233:1708/");
+            server.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODUyNzQwNDEsImlzcyI6ImJvb3RjYW1wcmVzb3VyY2VtYW5hZ2VtZW50IiwiYXVkIjoicmVhZGVycyJ9.YA-M_KN25FWmUuIS1bd9F5ioiRkVY8NCas1Bjma8kjQ");
         }
         public IActionResult Index()
         {
             ViewBag.Sites = ListSites();
-            ViewBag.Employees = ListEmployee();
+            ViewBag.Employees = ListParticipant();
             ViewBag.Interviews = ListInterview();
-            ViewBag.Ready = WaitingInterview();
+           
 
             return View();
         }
-       //Show DropDown in Modal Invitation Interview
+
+        //admin
+        [HttpGet]
+        public ActionResult Approve()
+        {
+            ViewBag.WaitingResult = WaitingResult();
+            return View();
+        }
+
+        //Show DropDown in Modal Invitation Interview
         public IList<SiteVM> ListSites()
         {
             IList<SiteVM> sites = null;
@@ -43,15 +55,30 @@ namespace Client.Controllers
             }
             return sites;
         }
-        public IList<UserVM> ListEmployee()
+        //public IList<ParticipantVM> ListParticipant()
+        //{
+        //    IList<ParticipantVM> emp = null;
+        //    var responseTask = server.GetAsync("Get");
+        //    responseTask.Wait();
+        //    var result = responseTask.Result;
+        //    if (result.IsSuccessStatusCode)
+        //    {
+        //        var readTask = result.Content.ReadAsAsync<IList<ParticipantVM>>();
+        //        readTask.Wait();
+        //        emp = readTask.Result;
+        //    }
+        //    return emp;
+        //}
+
+        public IList<EmployeeVM> ListParticipant()
         {
-            IList<UserVM> emp = null;
+            IList<EmployeeVM> emp = null;
             var responseTask = client.GetAsync("Employees");
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<IList<UserVM>>();
+                var readTask = result.Content.ReadAsAsync<IList<EmployeeVM>>();
                 readTask.Wait();
                 emp = readTask.Result;
             }
@@ -73,7 +100,14 @@ namespace Client.Controllers
             return interview;
         }
 
-        
+        //admin
+        public async Task<JsonResult> GetNameParticipant(string ParticipantId)
+        {
+            EmployeeVM emp = new EmployeeVM();
+            var response = await client.GetAsync("Employees/GetById/" + ParticipantId);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            return Json(new { data = apiResponse, statusCode = 200 });
+        }
         //admin
         //Invitation Interview
         [HttpPost]
@@ -91,64 +125,21 @@ namespace Client.Controllers
             return Json(new { statusCode = 400 });
         }
 
+      
         //admin
-        [HttpGet]
-        public ActionResult Approve()
-        {
-            ViewBag.Ready = WaitingResult();
-            return View();
-        }
-        //admin
-        [HttpGet]
-        //Get status Ready Interview 
-        public IList<InterviewVM> WaitingInterview()
-        {
-            IList<InterviewVM> Ready = null;
-            string Status = "Ready Interview";
-            var responseTask = client.GetAsync("Interviews/GetInterviewByStatus/"+ Status);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            if (result.IsSuccessStatusCode)
-            {
-                var readTask = result.Content.ReadAsAsync<IList<InterviewVM>>();
-                readTask.Wait();
-                Ready = readTask.Result;
-            }
-            return Ready;
-        }
-
+        [HttpGet]        
         public IList<InterviewVM> WaitingResult()
         {
-            IList<InterviewVM> WaitingResult = null;
-            string Status = "Waiting Result";
-            var responseTask = client.GetAsync("Interviews/GetInterviewByStatus/" + Status);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            if (result.IsSuccessStatusCode)
+            var all = ListInterview();
+            var listwaiting = new List<InterviewVM>();
+            foreach(var i in all)
             {
-                var readTask = result.Content.ReadAsAsync<IList<InterviewVM>>();
-                readTask.Wait();
-                WaitingResult = readTask.Result;
+                if (i.Status == "Waiting Result")
+                {
+                    listwaiting.Add(i);
+                }
             }
-            return WaitingResult;
+            return listwaiting;
         }
-        //Client
-        public IList<InterviewVM> ListInterviewByEmployeeId()
-        {
-            IList<InterviewVM> interview = null;
-            var EmployeeId = HttpContext.Session.GetString("Username");
-            var responseTask = client.GetAsync("Interviews/GetAllByEmployeeId/" + EmployeeId);
-            responseTask.Wait();
-            var result = responseTask.Result;
-            if (result.IsSuccessStatusCode)
-            {
-                var readTask = result.Content.ReadAsAsync<IList<InterviewVM>>();
-                readTask.Wait();
-                interview = readTask.Result;
-            }
-            return interview;
-        }
-
-
     }
 }

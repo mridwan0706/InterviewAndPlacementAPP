@@ -7,13 +7,29 @@ namespace Client.ViewModels
 {
     public class InterviewVM
     {
-        public string InterviewDate { get; set; }
-        public string InterviewTime { get; set; }
+        //VM Tb_t_Interview
+        public int Id { get; set; }
+        public DateTime InterviewDate { get; set; }
         public string Note { get; set; }
         public string Status { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string Interval { get; set; }
+        //VM tb_m_Sites
         public string SiteId { get; set; }
-        public int EmployeeId { get; set; }
-        public string EmployeeName { get; set; }
         public string SiteName { get; set; }
+        public string SiteEmail { get; set; }
+        public string SitePhone { get; set; }
+        public string SiteAddress { get; set; }
+        public string PIC { get; set; }
+        public string Logo { get; set; }
+        //VM tb_m_Employee
+        public string ParticipantId { get; set; }
+        public string Participant { get; set; }
+
+        public InterviewVM() { }
+        public void Create()
+        {
+            CreateDate = DateTime.Now;
+        }
     }
 }

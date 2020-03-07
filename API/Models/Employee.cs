@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 namespace API.Models
 {
     [Table("TB_M_Employees")]
-    public class Employee : Base
+    public class Employee :Base
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        
+        public string ParticipantId { get; set; }
+        public string Participant { get; set; }
+        public string NIK { get; set; }
         public string Email { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string Gender { get; set; }
-        public string Address { get; set; }
+        public string PasswordHash { get; set; }       
 
-        public Employee()
-        {
-            CreateDate = DateTime.Now.ToLocalTime();
-        }       
     }
 }

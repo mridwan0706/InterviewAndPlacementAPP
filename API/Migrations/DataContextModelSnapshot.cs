@@ -22,23 +22,21 @@ namespace API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
-
-                    b.Property<DateTime>("BirthDate");
-
                     b.Property<DateTime>("CreateDate");
 
                     b.Property<DateTime>("DeleteDate");
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("Gender");
-
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("NIK");
+
+                    b.Property<string>("Participant");
+
+                    b.Property<string>("ParticipantId");
+
+                    b.Property<string>("PasswordHash");
 
                     b.Property<DateTime>("UpdateDate");
 
@@ -56,13 +54,17 @@ namespace API.Migrations
 
                     b.Property<DateTime>("DeleteDate");
 
-                    b.Property<int>("EmployeeId");
+                    b.Property<string>("FeedBack");
 
                     b.Property<DateTime>("InterviewDate");
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Note");
+
+                    b.Property<string>("Participant");
+
+                    b.Property<string>("ParticipantId");
 
                     b.Property<int>("SiteId");
 
@@ -71,8 +73,6 @@ namespace API.Migrations
                     b.Property<DateTime>("UpdateDate");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
 
                     b.HasIndex("SiteId");
 
@@ -111,11 +111,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Interview", b =>
                 {
-                    b.HasOne("API.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("API.Models.Site", "Site")
                         .WithMany()
                         .HasForeignKey("SiteId")

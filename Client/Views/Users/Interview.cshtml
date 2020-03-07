@@ -6,6 +6,75 @@
 
 
 <div class="container-fluid">
+
+    <!-- Modal -->
+    <div class="modal fade animated bounceInDown show" id="MyModal" role="dialog" aria-labelledby="MyModal" aria-hidden="true">
+        <div class="modal-dialog full_modal-dialog" role="document">
+            <div class="modal-content full_modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Detail Interview</h5>                    
+                </div>
+                <div class="modal-body">
+                    <!-- Card -->
+                    <div class="card ">
+                        <div class="card-header text-center card-secondary">
+                            <div class="row">
+                                <div class="col-md-1"> <span class="label label-primary p-2 float-left text-center" id="InterviewId"></span></div>
+                                <div class="col-md-11"><h4 class="card-title text-center" id="SiteName"></h4></div>                               
+                            </div>
+                        </div>
+                        <div class="card-body border">
+                            <div class="row">  
+                                <div class="col-md-2">
+                                    <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-4"><span><i class="fa fa-address-book"></i> PIC</span></div>
+                                        <div>:</div>
+                                        <div class="col-7" id="PIC"><span></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"><span><i class=" fa fa-phone-square"></i> Phone</span></div>
+                                        <div>:</div>
+                                        <div class="col-7" id="Phone"><span></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"><span><i class="fa fa-location-arrow"></i> Address</span></div>
+                                        <div>:</div>
+                                        <div class="col-7" id="Address"><span></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-4"><span><i class="fa fa-calendar"></i> Date</span></div>
+                                        <div>:</div>
+                                        <div class="col-7"><span class="label label-danger text-center p-1" style="width:70%;" id="Date"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"><span><i class=" fa fa-clock-o"></i> Time</span></div>
+                                        <div>:</div>
+                                        <div class="col-7"><span class="label label-warning text-center p-1" style="width:70%;" id="Time"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="label text-center p-1" id="Status"></span>                                     
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center border">
+                            <span class="label label-danger" id="IntervalDetail"></span>
+                        </div>
+                    </div>
+                    <!-- Card -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="ButtonConfirm">Confirmation</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ============================================================== -->
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -18,12 +87,7 @@
             </ol>
         </div>
         <div class="col-md-6 col-4 align-self-center">
-            <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
-            <button class="btn pull-right hidden-sm-down btn-success"><i class="mdi mdi-plus-circle"></i> Create</button>
-            <div class="dropdown pull-right m-r-10 hidden-sm-down">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> January 2017 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> <a class="dropdown-item" href="#">February 2017</a> <a class="dropdown-item" href="#">March 2017</a> <a class="dropdown-item" href="#">April 2017</a> </div>
-            </div>
+            <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>           
         </div>
     </div>
     <!-- ============================================================== -->
@@ -32,11 +96,11 @@
     <!-- ============================================================== -->
     <!-- Start Page Content -->
     <!-- ============================================================== -->
- 
+
     <div class="col-md-12">
         <div class="card">
             <div class="card-body p-b-0">
-                <h4 class="card-title">Invitation Interview</h4>               
+                <h4 class="card-title">Invitation Interview</h4>
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs customtab2" role="tablist" style="width:100%;">
                     <li class="nav-item" style="width:50%;"> <a class="nav-link active" data-toggle="tab" href="#home7" role="tab"><span class="hidden-sm-up"><i class="ti-home"></i></span> <span class="hidden-xs-down">Active</span></a> </li>
@@ -46,41 +110,103 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="home7" role="tabpanel">
                         <div class="p-20">
-                            <!-- Card -->
-                            <div class="card ">
-                                <div class="card-header text-center">
-                                    <h4 class="card-title text-center">Interview Invitation</h4>
-                                </div>
-                                <div class="card-body border">
-                                    <div class="row">
-                                        <div class="col-12">
-                                           <span class="label label-danger p-2  mb-1">Waiting Confirmation</span> 
+                            @foreach (var list in ViewBag.InterviewByUser)
+                            {
+                                @if (list.Status == "Waiting Confirmation" || list.Status == "Ready Interview" || list.Status == "Waiting Result")
+                                {
+                                    <!-- Card 1-->
+                                    <div class="card ">
+                                        <div class="card-header text-center">
+                                            <h4 class="card-title text-center">Interview Invitation</h4>
+                                        </div>
+                                        <div class="card-body border">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    @if(list.Status=="Waiting Confirmation"){
+                                                         <span class="label label-danger p-2  mb-1">@list.Status</span>
+                                                    }@if(list.Status=="Ready Interview"){
+                                                        <span class="label label-warning p-2  mb-1">@list.Status</span>
+                                                    }@if(list.Status=="Waiting Result"){
+                                                        <span class="label label-info p-2  mb-1">@list.Status</span>
+                                                    }
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
+                                                </div>
+                                                <div class="col-md-4 ">
+                                                    <h4 class="bold mt-3">@list.SiteName</h4>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="label label-warning text-center" style="width:50%;">27-March-2020</span><br />
+                                                    <span class="label label-warning text-center" style="width:50%;">10:00 AM</span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MyModal" onclick="Detail(@list.Id)">
+                                                        View Detail
+                                                    </button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center border">
+                                            <span class="label label-danger" id="Interval">@list.Interval</span>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
-                                        </div>
-                                        <div class="col-md-4 ">
-                                            <h4 class="bold mt-3">BNI PENJOMPONGAN</h4>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span class="label label-warning text-center" style="width:50%;">27-March-2020</span><br />
-                                            <span class="label label-warning text-center" style="width:50%;">10:00 AM</span>
-                                         </div>
-                                        <div class="col-md-2">
-                                            <button class="btn btn-primary">View Detail</button>
-                                        </div>
-                                    </div>                                   
-                                </div>
-                                <div class="card-footer text-center border">
-                                    <span class="label label-danger">2 Days ago</span>
-                                </div>
-                            </div>
-                            <!-- Card -->
+                                    <!-- Card -->
+                                }else{
+                                    <span>You Dont Have Invitation Interview</span> 
+                                }
+                            }
                         </div>
                     </div>
-                    <div class="tab-pane  p-20" id="profile7" role="tabpanel"></div>                    
+                    <div class="tab-pane  p-20" id="profile7" role="tabpanel">
+                        <!-- Card -->
+                        @foreach (var list in ViewBag.InterviewByUser)
+                        {
+                            @if (list.Status == "Placement Accepted" || list.Status == "Placement Failed")
+                            {
+                                <div class="card ">
+                                    <div class="card-header text-center">
+                                        <h4 class="card-title text-center">Interview Invitation</h4>
+                                    </div>
+                                    <div class="card-body border">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                @if(list.Status =="Placement Accepted"){
+                                                    <span class="label label-success p-2 mb-1">@list.Status</span>
+                                                }@if(list.Status =="Placement Failed"){
+                                                    <span class="label label-danger p-2 mb-1">@list.Status</span>
+                                                }
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <h4 class="bold mt-3">@list.SiteName</h4>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <span class="label label-warning text-center" style="width:50%;">@Convert.ToDateTime(list.InterviewDate).ToString("dd-MMMM-yyyy")</span><br />
+                                                <span class="label label-warning text-center" style="width:50%;">@Convert.ToDateTime(list.InterviewDate).ToString("HH:MM")</span>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <button class="btn btn-primary">View Detail</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer text-center border">
+                                        <span class="label label-danger">@DateTime.Now.ToString("dd-MMMM-yyyy")</span>
+                                    </div>
+                                </div>
+                                <!-- Card -->
+                            }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,34 +238,7 @@
                     <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
                     <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
                     <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
-                </ul>
-                <ul class="m-t-20 chatonline">
-                    <li><b>Chat option</b></li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/1.jpg" alt="user-img" class="img-circle"> <span>Varun Dhavan <small class="text-success">online</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/2.jpg" alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small class="text-warning">Away</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/3.jpg" alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small class="text-danger">Busy</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/4.jpg" alt="user-img" class="img-circle"> <span>Arijit Sinh <small class="text-muted">Offline</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/5.jpg" alt="user-img" class="img-circle"> <span>Govinda Star <small class="text-success">online</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/6.jpg" alt="user-img" class="img-circle"> <span>John Abraham<small class="text-success">online</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/7.jpg" alt="user-img" class="img-circle"> <span>Hritik Roshan<small class="text-success">online</small></span></a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"><img src="~/images/users/8.jpg" alt="user-img" class="img-circle"> <span>Pwandeep rajan <small class="text-success">online</small></span></a>
-                    </li>
-                </ul>
+                </ul>               
             </div>
         </div>
     </div>
@@ -163,64 +262,86 @@
     <script src="~/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
     <!--Custom JavaScript -->
     <script src="~/js/custom.min.js"></script>
-    <script src="~/plugins/moment/min/moment.min.js"></script>
+    @* <script src="~/plugins/moment/min/moment.min.js"></script> *@
     <script src="~/plugins/wizard/jquery.steps.min.js"></script>
     <script src="~/plugins/wizard/jquery.validate.min.js"></script>
     <!-- Sweet-Alert  -->
     @*<script src="~/plugins/sweetalert/sweetalert.min.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script src="~/plugins/wizard/steps.js"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="~/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+    <!-- Moment Js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
     <script>
-        function Accept() {
-            debugger;
-            var interview = new Object();
-            interview.EmployeeId = 1;
-            interview.Status = "Interview Accept"; //Waitting, Decline Interview, Accept Interview, Interview Done, Interview Failed, Interview Success
+       
+        function Detail(Id) {           
             $.ajax({
-                "url": "/Interviews/AcceptInterview",
-                "type": "PUT",
+                "url": "/Users/GetDetailInterview/",
+                "type": "GET",
                 "dataType": "json",
-                "data": interview
+                "data": { id:Id}
             }).then((result) => {
                 debugger
-                if (result.statusCode == 200) {
-                    Swal.fire(
-                        'Success!',
-                        'Login Success',
-                        'success')
-                }
-            })
-        }
-        function Decline() {
-            var interview = new Object();
-            interview.Status = "Decline Interview"; //Waitting, Decline Interview, Accept Interview, Interview Done, Interview Failed, Interview Success
-            interview.Reason = $("#ReasonText").val();
-            $.ajax({
-                "url": "/Users/DeclineInterview",
-                "type": "Post",
-                "dataType": "json",
-                "data": interview
-            }).then((result) => {
-                debugger
-                if (result.statusCode == 200) {
-                    Swal.fire(
-                        'Success!',
-                        'Login Success',
-                        'success').then(() => {
-                            $("#MyModal").close();
-                        });
-                }
-                else {
-                    Swal.fire(
-                        'Failed!',
-                        'Oops.',
-                        'failed'
-                    )
-                }
+                if (result.data[0] != null) {
+                    var data = result.data;
+                    var InterviewVM = JSON.parse(data);   
+                    document.getElementById("InterviewId").innerHTML = "INT-" + InterviewVM[0].id;                   
+                    document.getElementById("SiteName").innerHTML = InterviewVM[0].siteName; 
+                    document.getElementById("PIC").innerHTML = InterviewVM[0].pic; 
+                    document.getElementById("Phone").innerHTML = InterviewVM[0].sitePhone; 
+                    document.getElementById("Address").innerHTML = InterviewVM[0].siteAddress; 
+                    document.getElementById("Date").innerHTML = moment(InterviewVM[0].createDate).format('D MMM YYYY');
+                    document.getElementById("Time").innerHTML = moment(InterviewVM[0].createDate).format('h:mm A');
+                    var Status = InterviewVM[0].status;
+                        if(Status =="Waiting Confirmation"){
+                            var SpanChange = document.getElementById("Status");
+                            SpanChange.classList.add("label-danger");
+                            SpanChange.innerHTML = Status;
+                            $("#ButtonConfirm").show();
+                        }if(Status =="Ready Interview"){
+                            var SpanChange = document.getElementById("Status");
+                            SpanChange.classList.add("label-warning");
+                            SpanChange.innerHTML = Status;
+                            $("#ButtonConfirm").hide();
+                        }if(Status =="Waiting Result"){
+                            var SpanChange = document.getElementById("Status");
+                            SpanChange.classList.add("label-info");
+                            SpanChange.innerHTML = Status;
+                            $("#ButtonConfirm").hide();
+                        }
+                    var Interval = document.getElementById("Interval").innerHTML;
+                    document.getElementById("IntervalDetail").innerHTML = Interval;
+                    
+
+                    var button = document.getElementById("ButtonConfirm");
+                    button.addEventListener("click",function(){
+                        
+                        var id = InterviewVM[0].id;                        
+                        var interview = new Object();
+                        interview.Status = "Waiting Result";                         
+                        $.ajax({
+                            "url": "/Users/UpdateStatus/",
+                            "type": "PUT",
+                            "dataType": "json",
+                            "data": {Id:id, Status:interview.Status }
+                        }).then((result)=>{
+                            debugger
+                            if (result.statusCode == 200) {
+                                Swal.fire(
+                                  'Success!',
+                                  'Login Success',
+                                  'success');
+                            }                            
+                        })
+                    });
+                    
+                   
+                }                
             })
         }
     </script>

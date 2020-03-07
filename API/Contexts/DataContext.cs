@@ -14,6 +14,6 @@ namespace API.Contexts
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Site> Sites { get; set; }
-        public DbSet<Interview> Interviews { get; set; }
+        public DbSet<Interview> Interviews { get; set; }        
     }
 }

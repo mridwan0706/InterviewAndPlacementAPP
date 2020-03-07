@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using API.Models;
 using Client.ViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +17,7 @@ namespace Client.Controllers
     {
         private readonly HttpClient client = new HttpClient();
         private readonly HttpClient server = new HttpClient();
-        public const string _sessionname = "1";
+        public const string _sessionname = "07a7e14c-064a-4f13-a095-011c4acca429";
         public UsersController()
         {
             
@@ -47,10 +48,10 @@ namespace Client.Controllers
             }
             return View();
         }
-        
-        public UserVM GetUsers()
+        //ambil data API Adi untuk Myprofile
+        public EmployeeVM GetUsers()
         {
-           UserVM users = null;
+            EmployeeVM users = null;
             //var _id = HttpContext.Session.GetString("UserId");
             var _id = HttpContext.Session.GetString("Username");
             //Akses Server
@@ -61,43 +62,109 @@ namespace Client.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<UserVM>();
+                var readTask = result.Content.ReadAsAsync<EmployeeVM>();
                 readTask.Wait();
                 users = readTask.Result;
-
-
             }
             return users;
-        }
-
-        //public JsonResult GetUserSession()
-        //{
-        //    var _id = HttpContext.Session.GetString("UserId");
-        //    var cek = server.GetAsync("Get/" + _id).Result;
-        //    var read = cek.Content.ReadAsAsync<UserVM>().Result;
-        //    return Json(new { data = read });
-        //}
-
-
-
-
-
-        public IActionResult Detail()
-        {
-            return View();
-        }
-
+        } 
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Login");
         }
-        public ActionResult Interview()
+
+        //tampilan untuk User    
+        [Route("Users/ResultInterview")]
+        public ActionResult ResultInterview()
         {
             return View();
         }
+        public ActionResult Interview()
+        {
+            HttpContext.Session.SetString("Username", _sessionname);
 
-        
-        
+            var _username = HttpContext.Session.GetString("Username");
+            var _Token = HttpContext.Session.GetString("Token");
+            if (_username == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                ViewBag.InterviewByUser = InterviewByUserId();
+            }
+            return View();
+        }
+
+        //Client
+        public IList<InterviewVM> InterviewByUserId()
+        {
+            IList<InterviewVM> ListInterview = null;
+            var ParticipantId = HttpContext.Session.GetString("Username");
+            var responseTask = client.GetAsync("Interviews/GetByUserId/" + ParticipantId);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var readTask = result.Content.ReadAsAsync<IList<InterviewVM>>();
+                readTask.Wait();
+                ListInterview = readTask.Result;
+                var Today = DateTime.Now.ToLocalTime();
+                foreach(var interview in ListInterview)
+                {
+                    var interval = Today - interview.CreateDate;
+                    if(interval.Days > 30)
+                    {
+                        interview.Interval = (interval.Days / 30).ToString() + " Months Ago" ;
+                    }if(interval.Days < 1)
+                    {
+                        interview.Interval = interval.Hours.ToString() + " Hours Ago";
+                    }
+                    //intrview.Interval = intrval.Days;
+                }
+                
+            }
+            return ListInterview;
+        }
+        public async Task<JsonResult> GetDetailInterview(int Id)
+        {
+            InterviewVM interview = new InterviewVM();
+            var response = await client.GetAsync("Interviews/GetAllByInterviewId/" + Id);
+            var apiResponse = await response.Content.ReadAsStringAsync();
+            return Json(new { data = apiResponse, statusCode = 200 });
+        }
+
+
+        //Change Status
+        //[HttpPut]
+        //public JsonResult UpdateStatusByInterviewId(int Id, InterviewVM interviewVM)
+        //{
+        //    var myContent = JsonConvert.SerializeObject(interviewVM);
+        //    var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+        //    var ByteContent = new ByteArrayContent(buffer);
+        //    ByteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+        //    var put =  client.PutAsync("Interviews/UpdateStatus/" +Id, ByteContent).Result;
+        //    if (put.IsSuccessStatusCode)
+        //    {
+        //        return Json(new { data = put, statusCode = 200 });
+        //    }
+        //    return Json(new { statusCode = 400 });
+        //}
+
+        public async Task<IActionResult> UpdateStatus(int Id, Interview interview)
+        {
+            var responseTask = await client.GetAsync("Interviews/" + Id);
+            var _interview = await responseTask.Content.ReadAsAsync<InterviewVM>();
+            _interview.Status = interview.Status;           
+            var myContent = JsonConvert.SerializeObject(_interview);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var ByteContent = new ByteArrayContent(buffer);
+            ByteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var putTask = client.PutAsync("Interviews/" +Id, ByteContent).Result;
+            
+            return Json(new { data=putTask, statusCode=200 });
+        }
+
     }
 }

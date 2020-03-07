@@ -15,9 +15,6 @@ namespace API.Models
         public string Phone { get; set; }
         public string PIC { get; set; }
         public string Logo { get; set; }
-        public Site()
-        {
-            CreateDate = DateTime.Now.ToLocalTime();
-        }
+       
     }
 }

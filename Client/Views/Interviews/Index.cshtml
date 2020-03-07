@@ -19,8 +19,7 @@
         <div class="col-lg-12 col-4 align-self-center">
             <button class="right-side-toggle waves-effect waves-light btn-info btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
             <div class="nav-item dropdown mega-dropdown">
-                <button class="btn pull-right btn-success waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-plus-circle"></i> Create</button>
-
+                <button class="btn pull-right btn-success waves-effect waves-dark" data-toggle="modal" data-target="#myModal"><i class="mdi mdi-plus-circle" id="ButtonInvitation"></i> Create</button>
             </div>
 
             <div class="dropdown-menu mailbox animated bounceInDown" aria-labelledby="2">
@@ -51,9 +50,14 @@
                                 <div class="form-group">
                                     <label for="recipient-name" class="col-form-label">Recipient:</label>
                                     <select class="select2" multiple="multiple" data-placeholder="To" style="width: 100%;" id="InvitationInterview">
+                                        @*@foreach (var emp in ViewBag.Employees)
+                                        {
+                                            <option value="@emp.Id" id="Participant">@emp.Name</option>
+                                        }*@
+                                        @* ini api local *@
                                         @foreach (var emp in ViewBag.Employees)
                                         {
-                                            <option value="@emp.Id">@emp.FirstName @emp.LastName</option>
+                                            <option value="@emp.ParticipantId">@emp.Participant</option>
                                         }
                                     </select>
                                 </div>
@@ -114,8 +118,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="Insert();">Send message</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>                   
                 </div>
             </div>
         </div>
@@ -139,19 +142,21 @@
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Name</th>
+                                    <th>Participant</th>
                                     <th>Invitation Date</th>
                                     <th>Site Name</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
                                     <th>No</th>
-                                    <th>Name</th>
+                                    <th>Participant</th>
                                     <th>Invitation Date</th>
                                     <th>Site Name</th>
                                     <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                             <tbody>
@@ -159,26 +164,30 @@
                                 {
                                 <tr>
                                     <td></td>
-                                    <td>@interview.EmployeeName</td>
-                                    <td>@Convert.ToDateTime(interview.InterviewDate).ToString("dd-MMMM-yyyy") </td>
+                                    <td>@interview.Participant</td>
+                                    <td>@Convert.ToDateTime(interview.InterviewDate).ToString("dd-MMMM-yyyy")</td>
 
                                     <td>@interview.SiteName</td>
-                                    @if (interview.Status == "Waiting Interview")
+                                    @if (interview.Status == "Waiting Confirmation")
                                     {
-                                        <td><span class="label label-danger text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
-                                    }@if (interview.Status == "Interview Done")
+                                        <td><span class="label label-danger text-center ml-lg-4" style="width:70%;">@interview.Status</span></td>
+                                    }@if (interview.Status == "Ready Interview")
                                     {
-                                        <td><span class="label label-success text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                        <td><span class="label label-warning text-center ml-lg-4" style="width:70%;">@interview.Status</span></td>
                                     }@if (interview.Status == "Waiting Result")
                                     {
-                                        <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
-                                    }@if (interview.Status == "Accept Placement")
+                                        <td><span class="label label-info text-center ml-lg-4" style="width:70%;">@interview.Status</span></td>
+                                    }@if (interview.Status == "Placement Accepted")
                                     {
-                                        <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
-                                    }@if(interview.Status == "Failed Placement")
+                                        <td><span class="label label-success text-center ml-lg-4" style="width:70%;">@interview.Status</span></td>
+                                    }@if (interview.Status == "Placement Failed")
                                     {
-                                        <td><span class="label label-primary text-center ml-lg-4" style="width:60%;">@interview.Status</span></td>
+                                        <td><span class="label label-danger text-center ml-lg-4" style="width:70%;">@interview.Status</span></td>
                                     }
+                                    <td><button class="btn btn-warning" data-placement="top" title="detail" data-toggle="modal" data-target="#MyModal" onclick="Detail(@interview.Id)"><i class="fa fa-info-circle"></i></button> 
+                                        <button class="btn btn-success" data-placement="right" title="FeedBack" onclick="FeedBack();"><i class="fa fa-file" aria-hidden="true"></i></button>
+                                    </td>  
+                                    
                                 </tr>
                                 }
                         </table>
@@ -187,6 +196,76 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade animated bounceInDown show" id="MyModal" role="dialog" aria-labelledby="MyModal" aria-hidden="true">
+        <div class="modal-dialog full_modal-dialog" role="document">
+            <div class="modal-content full_modal-content">
+                <div class="modal-header ">
+                    <h5 class="modal-title">Detail Interview</h5>                    
+                </div>
+                <div class="modal-body">
+                    <!-- Card -->
+                    <div class="card ">
+                        <div class="card-header text-center card-secondary">
+                            <div class="row">
+                                <div class="col-md-1"> <span class="label label-primary p-2 float-left text-center" id="InterviewId"></span></div>
+                                <div class="col-md-11"><h4 class="card-title text-center" id="SiteName"></h4></div>                               
+                            </div>
+                        </div>
+                        <div class="card-body border">
+                            <div class="row">  
+                                <div class="col-md-2">
+                                    <img src="~/images/logo/logo-bni.png" class="rounded float-left" style="width:70%;height:70%;">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-4"><span><i class="fa fa-address-book"></i> PIC</span></div>
+                                        <div>:</div>
+                                        <div class="col-7" id="PIC"><span></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"><span><i class=" fa fa-phone-square"></i> Phone</span></div>
+                                        <div>:</div>
+                                        <div class="col-7" id="Phone"><span></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"><span><i class="fa fa-location-arrow"></i> Address</span></div>
+                                        <div>:</div>
+                                        <div class="col-7" id="Address"><span></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-4"><span><i class="fa fa-calendar"></i> Date</span></div>
+                                        <div>:</div>
+                                        <div class="col-7"><span class="label label-danger text-center p-1" style="width:70%;" id="Date"></span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"><span><i class=" fa fa-clock-o"></i> Time</span></div>
+                                        <div>:</div>
+                                        <div class="col-7"><span class="label label-warning text-center p-1" style="width:70%;" id="Time"></span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="label text-center p-1" id="Status"></span>                                     
+                                </div>
+                            </div>
+                        </div>
+                        @* <div class="card-footer text-center border">
+                            <span class="label label-danger" id="IntervalDetail"></span>
+                        </div> *@
+                    </div>
+                    <!-- Card -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="ButtonConfirm">Confirmation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ============================================================== -->
     <!-- End PAge Content -->
     <!-- ============================================================== -->
@@ -397,6 +476,10 @@
         $('.timepicker').timepicker({
             showInputs: false
         })
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
                
     </script>
     <!-- ============================================================== -->
@@ -404,5 +487,49 @@
     <!-- ============================================================== -->
     <script src="~/plugins/styleswitcher/jQuery.style.switcher.js"></script>
     <script src="~/js/Interviews/Insert.js"></script>
+    <script>
+       function Detail(Id) {           
+            $.ajax({
+                "url": "/Users/GetDetailInterview/",
+                "type": "GET",
+                "dataType": "json",
+                "data": { id:Id}
+            }).then((result) => {
+                debugger
+                if (result.data[0] != null) {
+                    var data = result.data;
+                    var InterviewVM = JSON.parse(data);   
+                    document.getElementById("InterviewId").innerHTML = "INT-" + InterviewVM[0].id;                   
+                    document.getElementById("SiteName").innerHTML = InterviewVM[0].siteName; 
+                    document.getElementById("PIC").innerHTML = InterviewVM[0].pic; 
+                    document.getElementById("Phone").innerHTML = InterviewVM[0].sitePhone; 
+                    document.getElementById("Address").innerHTML = InterviewVM[0].siteAddress; 
+                    document.getElementById("Date").innerHTML = moment(InterviewVM[0].createDate).format('D MMM YYYY');
+                    document.getElementById("Time").innerHTML = moment(InterviewVM[0].createDate).format('h:mm A');
+                    var Status = InterviewVM[0].status;
+                        if(Status =="Waiting Confirmation"){
+                            var SpanChange = document.getElementById("Status");
+                            SpanChange.classList.add("label-danger");
+                            SpanChange.innerHTML = Status;
+                            $("#ButtonConfirm").show();
+                        }if(Status =="Ready Interview"){
+                            var SpanChange = document.getElementById("Status");
+                            SpanChange.classList.add("label-warning");
+                            SpanChange.innerHTML = Status;
+                            $("#ButtonConfirm").hide();
+                        }if(Status =="Waiting Result"){
+                            var SpanChange = document.getElementById("Status");
+                            SpanChange.classList.add("label-info");
+                            SpanChange.innerHTML = Status;
+                            $("#ButtonConfirm").hide();
+                        }
+                   
+                }                
+            })
+        }
+        
+    </script>
+
+
 }
 
